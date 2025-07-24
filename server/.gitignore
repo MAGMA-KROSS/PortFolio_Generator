@@ -1,0 +1,14 @@
+# Ignore dependencies
+node_modules/
+
+# Ignore build output
+dist/
+
+# Ignore environment files
+.env
+
+# Ignore OS files
+.DS_Store
+
+# Logs
+*.log
