@@ -9,6 +9,7 @@ enum UserRole{
 
 interface User{
     name: String,
+    age: Number,
     email: String,
     password: String,
     role: UserRole,
