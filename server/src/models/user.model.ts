@@ -1,6 +1,21 @@
-import { Schema } from "mongoose"
+import { Schema , model} from "mongoose"
 import mongoose from "mongoose";
-const userSchema = new Schema({
+import { object } from "zod";
+
+enum UserRole{
+    Admin = 'admin',
+    User = 'user'
+}
+
+interface User{
+    name: String,
+    email: String,
+    password: String,
+    role: UserRole,
+    createdAt?: Date
+}
+const userSchema = new mongoose.Schema({
+    
     name: {
         type: String,
         required: true,
@@ -16,6 +31,11 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
+    role:{
+        type: String,
+        enum: UserRole,
+        default: UserRole.User,
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -24,3 +44,4 @@ const userSchema = new Schema({
 });
 
 const User = mongoose.model('User', userSchema);
+export default User;
