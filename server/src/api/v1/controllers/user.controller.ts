@@ -1,76 +1,32 @@
 import { Request, Response } from "express";
 import { userSignupSchema } from "../validators/user.validation";
+import { userLoginSchema } from "../validators/user.validation";
 import User from "../../../models/user.model";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
-const signup = async (req: Request, res: Response) => {
-  const parsedData = userSignupSchema.safeParse(req.body);
-  if (!parsedData.success) {
-    return res.status(400).json({
-      error: parsedData.error 
-    });
-  }
 
-  const existingUser = await User.findOne({ email: parsedData.data.email });
-  if (existingUser) {
-    return res.status(409).json({ message: "User already exists" });
-  }
+// 1. The Big Picture 🌍
+// When a user signs up, the backend needs to:
 
-  const hashedPassword = await bcrypt.hash(parsedData.data.password, 10);
+// Check if the data is valid (name, email, password)
 
-  const newUser = await User.create({
-    name: parsedData.data.name,
-    email: parsedData.data.email,
-    password: hashedPassword,
-  });
+// Check if the user already exists
 
-  return res.status(201).json({
-    message: "User registered successfully",
-    userId: newUser._id,
-  });
-};
+// Securely store the password (hashing)
 
-export { signup };
+// Save the user in the database
+
+// Send a success/error response
 
 
-const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) {
-    return res.status(400).json({ message: "Invalid credentials" });
-  }
-
-  const token = jwt.sign(
-    { name: user.name },
-    process.env.JWT_SECRET as string,
-    { expiresIn: "7d" } // ✅ This line must end with `}`, not `;`
-  );
-
-  return res.status(200).json({
-    message: "Login successful",
-    token,
-    user: {
-      name: user.name,
-      email: user.email,
-    },
-  });
-};
-
-export { login };
 
 
 export const getMyProfile = async (req: Request, res: Response) => {
   try {
-     //@ts-ignore
-    const user = await User.findById(req.user._id)
-      .select('-password -__v -refreshToken');  
+    //@ts-ignore
+    const user = await User.findById(req.user._id) //ok so it also checks the user existnce and if it exists then returns the data also?
+      .select('-password -__v -refreshToken');
 
     // 2. Validate user exists
     if (!user) {
@@ -91,7 +47,7 @@ export const getMyProfile = async (req: Request, res: Response) => {
   }
 }
 
- 
+
 interface SafeUser {
   _id: mongoose.Types.ObjectId; // Use Mongoose's ObjectId type
   name: string;
@@ -109,7 +65,9 @@ export const updateProfile = async (req: Request, res: Response) => {
 
     const { name, email, password } = req.body;
 
-    let updateData: Partial<{ name: string; email: string; password: string }> = { name, email };
+    let updateData: Partial<{ name: string; email: string; password: string }> = {};
+    if (name) updateData.name = name;
+    if (email) updateData.email = email; 
     if (password) {
       updateData.password = await bcrypt.hash(password, 10);
     }

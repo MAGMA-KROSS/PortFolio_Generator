@@ -1,26 +1,42 @@
 import { Request, Response } from "express";
-import {Project} from "../../../models/project.model"; 
+import { Project } from "../../../models/project.model";
 import { error } from "console";
-
+import { z } from 'zod';
+import mongoose from "mongoose";
 export const getProjects = async (req: Request, res: Response) => {
   try {
-    // Fetch all projects from MongoDB
-    const projects = await Project.find({});
-    res.json(projects);
+    // Pagination
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = 10;
+    const skip = (page - 1) * limit;
+
+    // Field selection (whitelist)
+    const projects = await Project.find({})
+      .select('title description imageUrl price tags createdAt')
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 }); // Newest first
+
+    res.json({
+      page,
+      results: projects,
+      total: await Project.countDocuments() // For pagination UI
+    });
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch projects" });
   }
 };
 
+export const createProject = async (req: Request, res: Response) => {
+  try {
+    const { title, description, imageUrl, price, tags } = req.body;
 
-export const createProject = async(req:Request,res:Response)=>{
-  try{
-    const {title,description,imageUrl,price,tags}=req.body;
-
-    if(!title || !imageUrl || !price){
-      return res.status(400).json({error:" Title, Image URL and Price are required fields."});
+    // Lightweight runtime checks (complements Mongoose validation)
+    if (!title || !imageUrl || typeof price !== 'number') {
+      return res.status(400).json({ error: "Invalid input: Title, Image URL, and numeric Price are required" });
     }
 
+    // Create project - Mongoose will apply schema validation
     const newProject = await Project.create({
       title,
       description,
@@ -28,27 +44,79 @@ export const createProject = async(req:Request,res:Response)=>{
       price,
       tags,
       //@ts-ignore
-      user:req.user.id
-    })
-    res.status(201).json(newProject);
+      user: req.user._id // From auth middleware
+    });
 
-  } catch(err){
-    res.status(500).json({error: "Failed to create project"});
+    // Filter response fields
+    const safeProject = {
+      id: newProject._id,
+      title: newProject.title,
+      imageUrl: newProject.imageUrl,
+      price: newProject.price,
+      createdAt: newProject.createdAt
+    };
+
+    res.status(201).json(safeProject);
+
+  } catch (err) {
+    // Handle Mongoose validation errors
+    if (err instanceof mongoose.Error.ValidationError) {
+      return res.status(400).json({ error: err.message });
+    }
+    res.status(500).json({ error: "Project creation failed" });
   }
-}
-
+};
+ 
 export const deleteProject = async (req: Request, res: Response) => {
   try {
     const projectId = req.params.id;
-    const project = await Project.findByIdAndDelete(projectId);
-    
-    if (!project) {
-      return res.status(404).json({ error: "Project not found" });
+
+    // 1. Strict ID format validation
+    if (!mongoose.Types.ObjectId.isValid(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid project ID format"
+      });
     }
 
-    res.json({ message: "Project deleted" }); // Success
+    // 2. Admin-only deletion
+    const deletedProject = await Project.findOneAndDelete({
+      _id: projectId
+      // Note: Admin check is handled by middleware
+      // so no need to include it in the query
+    });
+
+    // 3. Handle missing project
+    if (!deletedProject) {
+      return res.status(404).json({
+        success: false,
+        error: "Project not found"
+      });
+    }
+
+    // 4. Success response
+    res.json({
+      success: true,
+      message: "Project deleted by admin",
+      deletedId: deletedProject._id,
+      timestamp: new Date().toISOString()
+    });
+
   } catch (err) {
-    res.status(500).json({ error: "Failed to delete project" });
+    // 5. Special handling for malformed IDs
+    if (err instanceof mongoose.Error.CastError) {
+      return res.status(400).json({
+        success: false,
+        error: "Malformed project ID"
+      });
+    }
+
+    // 6. Generic error (logs full error for debugging)
+    console.error("[Admin] Delete project error:", err);
+    res.status(500).json({
+      success: false,
+      error: "Admin deletion failed - please try again"
+    });
   }
 };
 

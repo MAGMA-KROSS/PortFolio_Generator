@@ -4,6 +4,7 @@ import loginRoutes from './login.routes';
 import userRoutes from './user.routes';
 import testRoutes from './test.routes';
 import projectRoutes from './project.routes'; 
+import authRoutes from './auth.route';
 const router = express.Router();
 
 // Mount individual route files
@@ -12,6 +13,7 @@ router.use('/login', loginRoutes);
 router.use('/users', userRoutes);
 router.use('/test', testRoutes);
 router.use('/projects',projectRoutes);
+router.use('/auth', authRoutes);
 export default router;
 
  

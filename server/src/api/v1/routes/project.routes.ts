@@ -1,20 +1,19 @@
-import express from "express";
 import { Router } from "express";
-import { getProjects } from "../controllers/project.controller";
 import authMiddleware from "../../../middlewares/auth.middleware";
-import { createProject } from "../controllers/project.controller"; 
-import { deleteProject } from "../controllers/project.controller";
-import { updateProject } from "../controllers/project.controller";
+import { createProject, deleteProject, updateProject, getProjects } from "../controllers/project.controller";
+import { upload } from "../../../middlewares/cloudinary";
+import { checkRole } from "../../../middlewares/role.middleware";
+
 const router = Router();
 
-router.get('/',(req,res)=>{
-  res.json({message: "Project route is working successfully!"})
-})
+router.get('/', (req, res) => {
+  res.json({ message: "Project route is working successfully!" });
+});
 
-router.post("/", authMiddleware, createProject);
+router.post("/", authMiddleware, checkRole(["admin"]), upload.single("image"), createProject);
 
-router.delete("/:id",authMiddleware, deleteProject);
+router.put("/:id", authMiddleware,checkRole(["admin"]),  updateProject);
 
-router.put("/:id", authMiddleware, updateProject);
+router.delete("/:id", authMiddleware,checkRole(["admin"]),  deleteProject);
 
 export default router;
