@@ -66,7 +66,9 @@ export const createProject = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Project creation failed" });
   }
 };
- 
+
+
+
 export const deleteProject = async (req: Request, res: Response) => {
   try {
     const projectId = req.params.id;
@@ -80,8 +82,8 @@ export const deleteProject = async (req: Request, res: Response) => {
     }
 
     // 2. Admin-only deletion
-    const deletedProject = await Project.findOneAndDelete({
-      _id: projectId
+    const deletedProject = await Project.findByIdAndDelete({
+      projectId
       // Note: Admin check is handled by middleware
       // so no need to include it in the query
     });
