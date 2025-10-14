@@ -1,6 +1,4 @@
-import { Request, Response } from "express";
-import { userSignupSchema } from "../validators/user.validation";
-import { userLoginSchema } from "../validators/user.validation";
+import { Request, Response } from "express"; 
 import User from "../../../models/user.model";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";

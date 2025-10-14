@@ -67,8 +67,6 @@ export const createProject = async (req: Request, res: Response) => {
   }
 };
 
-
-
 export const deleteProject = async (req: Request, res: Response) => {
   try {
     const projectId = req.params.id;
@@ -82,11 +80,11 @@ export const deleteProject = async (req: Request, res: Response) => {
     }
 
     // 2. Admin-only deletion
-    const deletedProject = await Project.findByIdAndDelete({
+    const deletedProject = await Project.findByIdAndDelete(
       projectId
       // Note: Admin check is handled by middleware
       // so no need to include it in the query
-    });
+    );
 
     // 3. Handle missing project
     if (!deletedProject) {

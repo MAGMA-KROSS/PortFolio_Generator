@@ -1,6 +1,6 @@
 
 import {Router} from "express"; 
-import { signup,login} from "../controllers/user.controller";
+import { signup,login} from "../controllers/auth.controller";
 import express from "express";
 import authMiddleware from "../../../middlewares/auth.middleware";
 import { getMyProfile } from "../controllers/user.controller";

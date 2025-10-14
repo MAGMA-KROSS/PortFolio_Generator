@@ -15,41 +15,59 @@ const generateRefreshToken = (payload: object) => {
 
 // ================== SIGNUP ==================
 export const signup = async (req: Request, res: Response) => {
+  console.log("🔥 Received signup request");
+  console.log("Request body:", req.body);
+
+  // Validate request body
   const parsedData = userSignupSchema.safeParse(req.body);
   if (!parsedData.success) {
+    console.log("❌ Validation failed:", parsedData.error.format());
     return res.status(400).json({ error: parsedData.error });
   }
-//@ts-ignore
+
+  //@ts-ignore
   const { name, email, password, role } = parsedData.data;
+  console.log("✅ Validation passed:", { name, email, role });
 
-  // Check if user already exists
-  const existingUser = await User.findOne({ email });
-  if (existingUser) {
-    return res.status(409).json({ message: "User already exists" });
+  try {
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      console.log("⚠️ User already exists:", email);
+      return res.status(409).json({ message: "User already exists" });
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("🔒 Password hashed");
+
+    // Create user
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role: role || "user",
+    });
+
+    console.log("✅ New user created:", { id: newUser._id, email: newUser.email, role: newUser.role });
+
+    return res.status(201).json({
+      message: "User registered successfully",
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+        isAdmin: newUser.role === "admin",
+      },
+    });
+  } catch (err) {
+    console.error("💥 Signup error:", err);
+    res.status(500).json({ message: "Server error" });
   }
-
-  // Hash password
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Create user with role (default: 'user')
-  const newUser = await User.create({
-    name,
-    email,
-    password: hashedPassword,
-    role: role || "user",
-  });
-
-  return res.status(201).json({
-    message: "User registered successfully",
-    user: {
-      id: newUser._id,
-      name: newUser.name,
-      email: newUser.email,
-      role: newUser.role,
-      isAdmin: newUser.role === "admin",
-    },
-  });
 };
+
+
 
 
 // ================== LOGIN ==================
@@ -85,6 +103,7 @@ export const login = async (req: Request, res: Response) => {
     message: "Login successful",
     accessToken,
     user: {
+      id: user._id,
       name: user.name,
       email: user.email,
       role: user.role,

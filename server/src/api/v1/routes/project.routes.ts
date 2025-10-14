@@ -6,9 +6,8 @@ import { checkRole } from "../../../middlewares/role.middleware";
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.json({ message: "Project route is working successfully!" });
-});
+router.get("/", getProjects);
+
 
 router.post("/", authMiddleware, checkRole(["admin"]), upload.single("image"), createProject);
 
