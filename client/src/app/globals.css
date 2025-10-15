@@ -49,4 +49,5 @@ body {
 * {
   scrollbar-width: thin;
   scrollbar-color: #5a5a5a #0a0a0a;
+  scroll-behavior: smooth;
 }
