@@ -28,7 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased text-white`}
       >
-        <div className="hidden md:block" style={{ position: 'fixed', inset: 0, zIndex: -10 }}>
+        <div className="" style={{ position: 'fixed', inset: 0, zIndex: -10 }}>
           <LiquidEther />
         </div>
         <main>

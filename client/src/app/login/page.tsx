@@ -1,6 +1,7 @@
 "use client";
 import { useState, FormEvent } from "react";
 import axios from "axios";
+import { useRouter } from 'next/navigation';
 
 // SVG Icon components for clarity (e.g., from Heroicons)
 const UserIcon = () => (
@@ -21,7 +22,7 @@ export default function LoginPage() {
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
-
+  const router = useRouter();
   const validateForm = () => {
     const newErrors = { email: "", password: "" };
     if (!email) {
@@ -52,6 +53,7 @@ export default function LoginPage() {
       setMessage("Login successful!");
       setIsSuccess(true);
       console.log(res.data);
+      router.push('/');
     } catch (err: any) {
       setMessage(err.response?.data?.message || "Login failed");
       setIsSuccess(false);
@@ -125,6 +127,12 @@ export default function LoginPage() {
             {message}
           </p>
         )}
+        <p className="text-center text-sm text-gray-300">
+          Don&apos;t have an account?{' '}
+          <a href="/signup" className="font-medium text-purple-400 hover:text-purple-300">
+            Register
+          </a>
+        </p>
       </div>
     </>
   );
