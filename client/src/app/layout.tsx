@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import LiquidEther from "../../LiquidEther/LiquidEther";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +26,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased text-white`}
       >
-        {children}
+        <div className="hidden md:block" style={{ position: 'fixed', inset: 0, zIndex: -10 }}>
+          <LiquidEther />
+        </div>
+        <main>
+     
+          {children}
+        
+        </main>
       </body>
     </html>
   );
