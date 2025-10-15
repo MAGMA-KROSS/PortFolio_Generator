@@ -29,7 +29,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased text-white`}
       >
         <div className="" style={{ position: 'fixed', inset: 0, zIndex: -10 }}>
-          {/* <LiquidEther /> */}
+          <LiquidEther />
         </div>
         <main>
      
