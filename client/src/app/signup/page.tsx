@@ -82,7 +82,7 @@ export default function SignupPage() {
             setPassword("");
 
         } catch (err: any) {
-            setMessage(err.response?.data?.message || "An error occurred during signup.");
+            setMessage(err.response?.data?.message || "Special characters are not allowed");
             setIsSuccess(false);
         }
     };
