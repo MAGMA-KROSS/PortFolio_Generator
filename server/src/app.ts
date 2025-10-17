@@ -7,6 +7,7 @@ import testRoutes from './api/v1/routes/test.routes'; // just for testing purpos
 import authRoutes from './api/v1/routes/auth.route';
 import projectRoutes from './api/v1/routes/project.routes';
 import cartRoutes from './api/v1/routes/cart.routes'; // 🛒 new import
+import adminRoutes from './api/v1/routes/admin.routes';
 import cors from "cors";
 const app = express();
 
@@ -22,11 +23,14 @@ app.use(
 );
 
 // Routes
+app.use("/images", express.static("public/images"));
 app.use('/api/v1', router);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/test', testRoutes);
 app.use('/api/v1/projects', projectRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/cart', cartRoutes); // 🛒 new route for testing cart APIs
+app.use("/admin", adminRoutes);
+
 
 export default app;
