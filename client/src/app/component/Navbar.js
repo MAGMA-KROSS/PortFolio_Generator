@@ -26,7 +26,7 @@ function Navbar() {
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-purple-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
             </Link>
             <Link
-              href="/Profolios"
+              href="/Portfolios"
               className="mr-5 hover:text-purple-500 transition-all duration-250 relative group"
             >
               Portfolios

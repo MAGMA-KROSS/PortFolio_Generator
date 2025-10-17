@@ -66,7 +66,7 @@ const Footer = () => {
 
 
         <div className="mt-10 cursor-default pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
-          <p>&copy; 2025 MagmaAI. All rights reserved.</p>
+          <p>&copy; 2025 MagmaBuilder. All rights reserved.</p>
         </div>
       </div>
     </motion.footer>
