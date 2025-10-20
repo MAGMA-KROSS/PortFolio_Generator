@@ -10,8 +10,15 @@ const portfolioTemplates: Template[] = [
     id: 1,
     name: 'SimpleFolio',
     thumbnailUrl: '/Port_Demo_Img/Demo1.png',
-    techStack: ['HTML', 'SCSS', 'JavaSript'],
-    previewUrl: 'https://the-simplefolio.netlify.app/',
+    techStack: ['TypeScript', 'Next.js', 'Tailwind CSS'],
+    previewUrl: '/Portfolios/SimpleFolio',
+  },
+  {
+    id: 2,
+    name: 'ModernNeon',
+    thumbnailUrl: '/Port_Demo_Img/Demo2.png',
+    techStack: ['TypeScript', 'Next.js', 'Tailwind CSS'],
+    previewUrl: '/Portfolios/ModernNeon',
   },
 ];
 

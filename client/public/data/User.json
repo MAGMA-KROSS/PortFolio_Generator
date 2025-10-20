@@ -1,0 +1,131 @@
+{
+  "name": "Abi Kumar",
+  "title": "Full Stack Developer & UI Designer",
+  "description": "I craft immersive, scalable, and user-centric web experiences, blending sleek design with robust, high-performance code.",
+  "profileImage": "https://i.pinimg.com/1200x/f2/c0/ab/f2c0ab43079ac4d7eece8e67c0b6e7fb.jpg",
+  "logo": "AK",
+  "navLinks": [
+    {
+      "name": "Home",
+      "href": "#hero"
+    },
+    {
+      "name": "Projects",
+      "href": "#projects"
+    },
+    {
+      "name": "About",
+      "href": "#about"
+    },
+    {
+      "name": "Contact",
+      "href": "#contact"
+    }
+  ],
+  "socialLinks": {
+    "github": "https://github.com/abikumar",
+    "linkedin": "https://linkedin.com/in/abikumar"
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Who I Am",
+    "description": "I'm Abi Kumar, a passionate full-stack developer based in Noida, UP. My focus is on building interactive, performant, and visually appealing digital experiences. With a strong foundation in both front-end and back-end technologies, I love bringing ideas to life, from the initial concept to a fully deployed application.",
+    "skills": [
+      "JavaScript (ES6+)",
+      "React",
+      "Next.js",
+      "Node.js",
+      "Tailwind CSS",
+      "TypeScript",
+      "Prisma",
+      "Supabase"
+    ],
+    "profileImage": "https://i.pinimg.com/1200x/21/f9/b1/21f9b15d71cf787cf10823cf2c499f53.jpg"
+  },
+  "skills": {
+    "title": "Skills & Technologies",
+    "description": "A snapshot of the tools and technologies I use to build modern, robust, and scalable web applications.",
+    "categories": [
+      {
+        "name": "Frontend",
+        "items": [
+          "HTML5",
+          "CSS3",
+          "JavaScript (ES6+)",
+          "TypeScript",
+          "React",
+          "Next.js",
+          "Tailwind CSS",
+          "Framer Motion"
+        ]
+      },
+      {
+        "name": "Backend",
+        "items": [
+          "Node.js",
+          "Express.js",
+          "Python",
+          "Prisma",
+          "PostgreSQL",
+          "MongoDB",
+          "Supabase"
+        ]
+      },
+      {
+        "name": "Tools & Workflow",
+        "items": [
+          "Git & GitHub",
+          "Docker",
+          "VS Code",
+          "Postman",
+          "Figma",
+          "Vercel"
+        ]
+      }
+    ]
+  },
+  "projects": {
+    "title": "My Projects",
+    "description": "Here are some of the personal and academic projects I've worked on. Each project showcases my journey in learning and applying new technologies.",
+    "items": [
+      {
+        "title": "MagmaResumeAI",
+        "description": "An AI-powered resume builder that helps users create professional resumes tailored to specific job descriptions using LLMs.",
+        "tags": ["Next.js", "Tailwind CSS", "TypeScript", "Gemini API", "Supabase"],
+        "image": "https://i.pinimg.com/736x/ca/d8/96/cad896cd7d46971543cd0ddc468a89e9.jpg",
+        "liveUrl": "https://example.com",
+        "githubUrl": "https://github.com/MAGMA-KROSS/project"
+      },
+      {
+        "title": "MagmaFitnessAI",
+        "description": "A personalized fitness and nutrition planner that generates workout routines and diet plans based on user goals and preferences.",
+        "tags": ["React", "Node.js", "Express", "MongoDB", "AI"],
+        "image": "https://i.pinimg.com/736x/ca/d8/96/cad896cd7d46971543cd0ddc468a89e9.jpg",
+        "liveUrl": "https://example.com",
+        "githubUrl": "https://github.com/MAGMA-KROSS/project"
+      },
+      {
+        "title": "Personal Portfolio",
+        "description": "My personal developer portfolio, designed with a dark neon aesthetic and built with Next.js for high performance.",
+        "tags": ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"],
+        "image": "https://i.pinimg.com/736x/ca/d8/96/cad896cd7d46971543cd0ddc468a89e9.jpg",
+        "liveUrl": "#",
+        "githubUrl": "https://github.com/MAGMA-KROSS/project"
+      },
+      {
+        "title": "Idea Catcher Workflow",
+        "description": "An automation workflow using n8n to capture ideas from multiple sources and organize them into a centralized Google Sheet.",
+        "tags": ["n8n", "Automation", "Google Sheets API"],
+        "image": "https://i.pinimg.com/736x/ca/d8/96/cad896cd7d46971543cd0ddc468a89e9.jpg",
+        "liveUrl": "https://example.com",
+        "githubUrl": "https://github.com/MAGMA-KROSS/project"
+      }
+    ]
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "description": "I'm currently open to new opportunities and collaborations. Whether you have a question or just want to say hi, feel free to reach out. My inbox is always open!",
+    "email": "abik4001@gmail.com",
+    "resumeUrl": "/path/to/your/Abi_Kumar_Resume.pdf"
+  }
+}

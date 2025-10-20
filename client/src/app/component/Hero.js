@@ -68,7 +68,7 @@ export default function Hero() {
 
       <motion.div variants={itemVariants} className="mt-10 relative z-10">
         <Link
-          href="/templates"
+          href="/Portfolios"
           className="px-8 py-4 text-lg font-semibold rounded-xl bg-gradient-to-r from-white to-gray-200 text-black shadow-lg hover:shadow-gray-500/50 cursor-pointer hover:scale-105 transition-all duration-600"
         >
           Start Building for Free

@@ -1,0 +1,78 @@
+{
+    "name": "Kumar Abi",
+    "role": "Full Stack Developer",
+    "tagline": "Building robust and scalable web applications from concept to completion.",
+    "profileImage": "https://i.pinimg.com/1200x/21/f9/b1/21f9b15d71cf787cf10823cf2c499f53.jpg",
+    "about": "I am a passionate Full Stack Developer with a knack for creating efficient, scalable, and user-friendly web applications. With a strong foundation in both front-end and back-end technologies, I enjoy tackling complex problems and turning ideas into reality. When I'm not coding, I enjoy hiking and exploring new coffee shops.",
+    "skills": [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "PostgreSQL",
+        "Docker",
+        "Tailwind CSS",
+        "Git"
+    ],
+    "projects": [
+        {
+            "id": 1,
+            "name": "ShopSphere - E-commerce Platform",
+            "description": "A feature-rich e-commerce platform built with a modern tech stack, featuring product browsing, a secure cart, and Stripe integration for payments.",
+            "tech": [
+                "Next.js",
+                "Stripe",
+                "MongoDB",
+                "Tailwind CSS"
+            ],
+            "github": "https://github.com/johndoe/shopsphere",
+            "demo": "https://shopsphere.example.com"
+        },
+        {
+            "id": 2,
+            "name": "TaskFlow - Project Management Tool",
+            "description": "A collaborative project management application that helps teams organize tasks, track progress, and communicate effectively in real-time.",
+            "tech": [
+                "React",
+                "Firebase",
+                "Framer Motion",
+                "TypeScript"
+            ],
+            "github": "https://github.com/johndoe/taskflow",
+            "demo": "https://taskflow.example.com"
+        },
+        {
+            "id": 3,
+            "name": "ChatterBox - Real-Time Chat App",
+            "description": "A responsive, real-time messaging application allowing users to join rooms and chat. Built with a Node.js backend and WebSockets for instant communication.",
+            "tech": [
+                "React",
+                "Node.js",
+                "Express",
+                "Socket.IO"
+            ],
+            "github": "https://github.com/johndoe/chatterbox",
+            "demo": "https://chatterbox.example.com"
+        },
+        {
+            "id": 4,
+            "name": "Insightify - Data Visualization Dashboard",
+            "description": "An interactive dashboard for visualizing complex datasets with dynamic charts and graphs. Features include data filtering and custom reporting.",
+            "tech": [
+                "TypeScript",
+                "React",
+                "D3.js",
+                "Tailwind CSS"
+            ],
+            "github": "https://github.com/johndoe/insightify",
+            "demo": "https://insightify.example.com"
+        }
+    ],
+    "contact": {
+        "email": "john.doe@example.com",
+        "phone": "+1 (555) 123-4567",
+        "location": "San Francisco, CA"
+    }
+}
