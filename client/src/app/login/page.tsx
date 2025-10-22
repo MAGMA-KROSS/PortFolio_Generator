@@ -23,6 +23,7 @@ export default function LoginPage() {
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
+  
   const validateForm = () => {
     const newErrors = { email: "", password: "" };
     if (!email) {
@@ -50,10 +51,22 @@ export default function LoginPage() {
         { email, password },
         { withCredentials: true }
       );
-      setMessage("Login successful!");
-      setIsSuccess(true);
+      
       console.log(res.data);
-      router.push('/');
+      
+      localStorage.setItem("accessToken", res.data.accessToken);
+      localStorage.setItem("role", res.data.user?.role || "user");
+
+      window.dispatchEvent(new Event("storage"));
+      
+      setMessage("Login successful! Redirecting...");
+      setIsSuccess(true);
+      
+    
+      setTimeout(() => {
+        router.push('/');
+      }, 1000);
+      
     } catch (err: any) {
       setMessage(err.response?.data?.message || "Login failed");
       setIsSuccess(false);
@@ -62,7 +75,6 @@ export default function LoginPage() {
 
   return (
     <>
-
       {/* The animated Glassmorphism Dialog Box */}
       <div className="login-dialog w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-md p-8 space-y-8 bg-white/5 backdrop-blur-xl rounded-xl shadow-2xl border border-white/20">
 

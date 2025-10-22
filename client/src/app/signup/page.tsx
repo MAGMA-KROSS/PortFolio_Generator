@@ -1,6 +1,7 @@
 "use client";
 import { useState, FormEvent } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 // SVG Icon components for each input field
 const NameIcon = () => (
@@ -22,6 +23,7 @@ const LockIcon = () => (
 );
 
 export default function SignupPage() {
+    const router = useRouter();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -73,13 +75,40 @@ export default function SignupPage() {
                 { name, email, password },
                 { withCredentials: true }
             );
-            setMessage("Signup successful! You can now log in.");
-            setIsSuccess(true);
+            
             console.log(res.data);
-            // Clear form on success
-            setName("");
-            setEmail("");
-            setPassword("");
+            
+            // Check if signup returns a token (auto-login scenario)
+            if (res.data.accessToken) {
+                // ✅ Auto-login: Store token and role
+                localStorage.setItem("accessToken", res.data.accessToken);
+                localStorage.setItem("role", res.data.user?.role || "user");
+                
+                // ✅ Dispatch storage event to update navbar
+                window.dispatchEvent(new Event("storage"));
+                
+                setMessage("Account created successfully! Redirecting...");
+                setIsSuccess(true);
+                
+                // Redirect to home after brief delay
+                setTimeout(() => {
+                    router.push('/');
+                }, 1000);
+            } else {
+                // Manual login required
+                setMessage("Signup successful! You can now log in.");
+                setIsSuccess(true);
+                
+                // Clear form on success
+                setName("");
+                setEmail("");
+                setPassword("");
+                
+                // Redirect to login page after brief delay
+                setTimeout(() => {
+                    router.push('/login');
+                }, 2000);
+            }
 
         } catch (err: any) {
             setMessage(err.response?.data?.message || "Special characters are not allowed");
