@@ -1,4 +1,4 @@
-# Resume Generator
+# Portfolio Generator
 
 This is a web application that allows users to generate professional resumes.
 
@@ -6,14 +6,14 @@ This is a web application that allows users to generate professional resumes.
 
 ## Description
 
-The Resume Generator is a full-stack web application built with the MERN stack (MongoDB, Express.js, React.js, Node.js) and Next.js for the frontend. It provides users with a simple and intuitive interface to create, customize, and download their resumes.
+The Portfolio Generator is a full-stack web application built with the MERN stack (MongoDB, Express.js, React.js, Node.js) and Next.js for the frontend. It provides users with a simple and intuitive interface to create, customize, and download their resumes.
 
 -----
 
 ## Features
 
   * **User Authentication**: Secure user authentication and authorization.
-  * **Resume Creation**: Create and edit resumes with various sections like personal details, education, work experience, skills, and projects.
+  * **Portfolio Creation**: Create and edit resumes with various sections like personal details, education, work experience, skills, and projects.
   * **Multiple Templates**: Choose from a variety of professional resume templates.
   * **Image Upload**: Upload a profile picture to be included in the resume, with support for Cloudinary.
   * **PDF Generation**: Download the generated resume as a PDF.
