@@ -57,21 +57,25 @@ interface SafeUser {
 
 export const updateProfile = async (req: Request, res: Response) => {
   try {
-    // CHANGE THIS LINE ONLY:
+    // ✅ Make sure req.user exists before accessing _id
     //@ts-ignore
-    const userId = req.user._id; // ✅ From token (was `req.params.id`)
+    const userId = req.user?._id;
+
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized: User not found in token" });
+    }
 
     const { name, email, password } = req.body;
 
     let updateData: Partial<{ name: string; email: string; password: string }> = {};
     if (name) updateData.name = name;
-    if (email) updateData.email = email; 
+    if (email) updateData.email = email;
     if (password) {
       updateData.password = await bcrypt.hash(password, 10);
     }
 
     const updatedUser = await User.findByIdAndUpdate(
-      userId, // ✅ Now uses secure ID
+      userId,
       updateData,
       { new: true }
     );
@@ -80,12 +84,12 @@ export const updateProfile = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Keep this as-is (it's fine)
     const { password: _, __v: __, ...rest } = updatedUser.toObject();
     const safeData: SafeUser = rest;
     res.json(safeData);
 
-  } catch (err) {
-    res.status(500).json({ error: "Failed to update user profile" });
+  } catch (err: any) {
+    console.error(err); // log full error
+    res.status(500).json({ error: err.message || "Failed to update user profile" });
   }
 };

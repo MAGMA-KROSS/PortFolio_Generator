@@ -7,9 +7,9 @@ dotenv.config();
 
 // Replace with your admin details
 const adminData = {
-  name: "Imaad Admin",
-  email: "amd.imad69@gmail.com",
-  password: "Imada69!", // plaintext, will be hashed
+  name: "marcel admin",
+  email: "amd.marcel@gmail.com",
+  password: "Marcel69!", // plaintext, will be hashed
   role: "admin",
 };
 

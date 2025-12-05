@@ -6,6 +6,7 @@ interface Project {
   description?: string;   // Optional
   imageUrl: string;
   price: number;         // Changed to Number
+  zipUrl: string; 
   createdAt?: Date;
   tags?: string[]
 }
@@ -24,6 +25,7 @@ const ProjectSchema = new Schema<Project>({
     type: Number, 
     required: true 
   },
+  zipUrl: { type: String, required: true },
   createdAt: { 
     type: Date, 
     default: Date.now 

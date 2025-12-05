@@ -12,7 +12,7 @@ export const getProjects = async (req: Request, res: Response) => {
 
     // Field selection (whitelist)
     const projects = await Project.find({})
-      .select('title description imageUrl price tags createdAt')
+      .select('title description imageUrl price tags createdAt zipUrl')
       .skip(skip)
       .limit(limit)
       .sort({ createdAt: -1 }); // Newest first
@@ -27,13 +27,26 @@ export const getProjects = async (req: Request, res: Response) => {
   }
 };
 
+
 export const createProject = async (req: Request, res: Response) => {
   try {
-    const { title, description, imageUrl, price, tags } = req.body;
+    console.log("REQ BODY:", req.body);          // Log all incoming body fields
+    console.log("REQ FILE:", req.file);          // Log uploaded file info (if any)
+    //@ts-ignore
+    console.log("USER FROM TOKEN:", req.user);   // Log user info from auth middleware
 
-    // Lightweight runtime checks (complements Mongoose validation)
-    if (!title || !imageUrl || typeof price !== 'number') {
-      return res.status(400).json({ error: "Invalid input: Title, Image URL, and numeric Price are required" });
+    const imageUrlFromFile = req.file?.path;
+    const numericPrice = Number(req.body.price);
+
+    const { title, description, tags, zipUrl } = req.body;  // <-- zipUrl added
+    const imageUrl = imageUrlFromFile;
+    const price = numericPrice;
+
+    if (!title || !imageUrl || typeof price !== 'number' || isNaN(price)) {
+      console.log("Validation failed: Missing or invalid fields");
+      return res.status(400).json({
+        error: "Invalid input: Title, Image URL, and numeric Price are required"
+      });
     }
 
     // Create project - Mongoose will apply schema validation
@@ -43,8 +56,9 @@ export const createProject = async (req: Request, res: Response) => {
       imageUrl,
       price,
       tags,
+      zipUrl,  // <-- added zipUrl here
       //@ts-ignore
-      user: req.user._id // From auth middleware
+      user: req.user._id
     });
 
     // Filter response fields
@@ -56,16 +70,21 @@ export const createProject = async (req: Request, res: Response) => {
       createdAt: newProject.createdAt
     };
 
+    console.log("Project created successfully:", safeProject);
+
     res.status(201).json(safeProject);
 
   } catch (err) {
-    // Handle Mongoose validation errors
+    console.error("Error creating project:", err);
+
     if (err instanceof mongoose.Error.ValidationError) {
       return res.status(400).json({ error: err.message });
     }
     res.status(500).json({ error: "Project creation failed" });
   }
 };
+
+
 
 export const deleteProject = async (req: Request, res: Response) => {
   try {
@@ -122,19 +141,29 @@ export const deleteProject = async (req: Request, res: Response) => {
 
 export const updateProject = async (req: Request, res: Response) => {
   try {
+    // LOGS
+    console.log("REQ PARAMS:", req.params);
+    console.log("REQ BODY:", req.body);
+    //@ts-ignore
+    console.log("REQ USER:", req.user);
+
     const projectId = req.params.id;
-    const { title, description, imageUrl, price, tags } = req.body;
+
+    const { title, description, imageUrl, price, tags, zipUrl } = req.body;
+
     const updatedProject = await Project.findByIdAndUpdate(
       projectId,
-      { title, description, imageUrl, price, tags },
+      { title, description, imageUrl, price, tags, zipUrl }, // <-- zipUrl added
       { new: true }
     );
 
     if (!updatedProject) {
       return res.status(404).json({ error: "Project not found" });
     }
-    res.json(updatedProject); // ✅ Send updated project
+
+    res.json(updatedProject); 
   } catch (err) {
+    console.error("Error in updateProject:", err);
     res.status(500).json({ error: "Failed to update project" });
   }
 };

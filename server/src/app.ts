@@ -8,6 +8,8 @@ import authRoutes from './api/v1/routes/auth.route';
 import projectRoutes from './api/v1/routes/project.routes';
 import cartRoutes from './api/v1/routes/cart.routes'; // 🛒 new import
 import adminRoutes from './api/v1/routes/admin.routes';
+import orderRoutes from './api/v1/routes/order.routes'; // <-- added
+
 import cors from "cors";
 const app = express();
 
@@ -31,6 +33,8 @@ app.use('/api/v1/projects', projectRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/cart', cartRoutes); // 🛒 new route for testing cart APIs
 app.use("/admin", adminRoutes);
+app.use('/api/v1/orders', orderRoutes); // <-- added
+
 
 
 export default app;

@@ -16,19 +16,24 @@ export default function PostsPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const fetchProjects = async () => {
-    try {
-      const res = await fetch(
-        `http://localhost:5000/api/v1/projects?page=${page}&limit=10&search=${search}`
-      );
-      const data = await res.json();
-
-      setProjects(data.results);
-      setTotalPages(Math.ceil((data.total || data.results.length) / 10));
-    } catch (err) {
-      console.error('Failed to fetch projects:', err);
-    }
-  };
+ const fetchProjects = async () => {
+  try {
+    console.log('🔄 Fetching projects from:', `http://localhost:5000/api/v1/projects?page=${page}&limit=10&search=${search}`);
+    
+    const res = await fetch(`http://localhost:5000/api/v1/projects?page=${page}&limit=10&search=${search}`);
+    
+    console.log('📡 Response status:', res.status);
+    console.log('📡 Response ok:', res.ok);
+    
+    const data = await res.json();
+    console.log('📦 Projects data:', data);
+    
+    setProjects(data.results || []);
+    setTotalPages(Math.ceil((data.total || data.results?.length || 0) / 10));
+  } catch (err) {
+    console.error('❌ Failed to fetch projects:', err);
+  }
+};
 
   useEffect(() => {
     fetchProjects();
